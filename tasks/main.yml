@@ -1,1 +1,36 @@
 ---
+- name: Verify that Virtualization Technology (VT) is enabled
+  shell: grep -c -E 'svm|vmx' /proc/cpuinfo
+  changed_when: False
+  
+- name: Ensure a complete libvirt-stack is present
+  apt:
+    name: '{{ item }}'
+    state: 'present'
+  with_items: '{{ libvirt_packages }}'
+  notify: restart libvirt
+
+- name: Ensure libvirt is configured
+  template:
+    src: 'etc/libvirt/libvirt.conf.j2'
+    dest: '/etc/libvirt/libvirt.conf'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+
+- name: Enable KSM
+  sysctl: name="kernel.mm.ksm.run" value=1 sysctl_set=yes state=present
+  when: libvirtd_ksm_enabled == True
+  
+- name: Enable ksmtuned
+  service: name="{{ ksmtuned_daemon }}" state=started enabled=yes
+  when: libvirtd_ksm_enabled == True
+  
+- name: Disable KSM
+  sysctl: name="kernel.mm.ksm.run" value=0 sysctl_set=yes state=present
+  when: libvirtd_ksm_enabled == False
+  
+ - name: Disable ksmtuned
+   service: name="{{ ksmtuned_daemon }}" state=stopped enabled=no
+   when: libvirtd_ksm_enabled == False
+ 
