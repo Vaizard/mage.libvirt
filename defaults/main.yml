@@ -1,0 +1,2 @@
+---
+libvirtd_ksm_enabled: False # Enable to gain memory savings for approx 10% CPU performance hit
