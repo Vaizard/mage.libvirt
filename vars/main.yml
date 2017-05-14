@@ -1,0 +1,45 @@
+---
+# Debian family variables
+libvirt_daemon: 'libvirt-bin'
+ksmtuned_daemon: 'ksmtuned'
+libvirt_packages:
+  - 'libvirt-bin'
+  - 'netcat-openbsd'
+  - 'gawk'
+  - 'ebtables'
+  - 'virtinst'
+  - 'bridge-utils'
+  - 'cpu-checker'
+  - 'libguestfs-tools'
+  - 'virt-top'
+  - 'virt-manager'
+  - 'qemu-system-x86'
+  - 'qemu-kvm'
+  - 'qemu-utils'
+  - 'dnsmasq-base'
+  - 'ebtables'  
+  - 'ksmtuned'
+  
+# TODO (test RH and split)  
+# RH family variables
+#libvirt_daemon: 'libvirt-bin'
+#ksmtuned_daemon: 'ksmtuned'
+#libvirt_packages:
+#- libvirt
+#- virt-manager
+#- virt-install
+#- qemu-kvm
+#- qemu-img
+#- bridge-utils
+#- libvirt-client
+#- libvirt-python
+#- libguestfs-tools
+#- virt-top
+#- ebtables
+#- ebtables  
+#- ksmtuned
+#- 'netcat-openbsd'
+#- 'gawk'
+#- 'cpu-checker'
+#- 'dnsmasq-base'
+#- 'qemu-system-x86'
