@@ -14,12 +14,21 @@ mkdir -p /mnt/kvm-win10-mount
 sudo guestmount -a /home/user/kvm-win10.qcow2 -m /dev/sda2 --ro /mnt/kvm-win10-mount -v -o allow_other
 sudo guestunmount /mnt/kvm-win10-mount
 
+### Resize VM's volume
+
+virsh blockresize kvm-win10 /home/user/kvm-win10.qcow2 17G # safe to do on a running VM (win required a reboot nontheless to see the new space
+virsh vol-resize /home/killua/testwin10.qcow2 19G # safe on powered down VM
+# don't forget to resize the guest's fs as well (on windows guests use diskmgmt.msc)
+
 ### virsh tips and tricks
 
 virsh list --all --title # show the created guest (and all other guests too)
 virsh --readonly dumpxml kvm-win10 # dump xml (works also in manged environments such as those run by ovirt)
 virsh dominfo kvm-win10 # show info about kvm-win10 (one of the above listed vms)
 virsh domblklist kvm-win10 # show info about kvm-win10 block devices (one of the above listed vms)
+sudo virsh pool-list
+sudo virsh vol-list --pool default
+sudo virsh vol-dumpxml --pool default testwin10.qcow2
 virsh net-list # show networks
 virsh net-dumpxml default # export xml of default (one of the above listed networks)
 virsh net-dhcp-leases default # show ip addresses leased on the 'default' network
