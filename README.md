@@ -8,6 +8,8 @@ Ansible role to install and manage kvm/libvirt guests.
 
 virt-install --name="kvm-win10" --os-type=windows --network network=default --disk path=/home/user/kvm-win10.qcow2,size=15 --cdrom=/home/user/Win10_1703_Czech_x64.iso  --graphics spice --ram=2048
 
+virt-install --name="kvm-win10" --os-type=windows --os-variant=win10 --network network=default --disk path=/var/lib/libvirt/images/share.qcow2,size=5,bus=virtio --disk path=/var/lib/libvirt/images/kvm-win10.qcow2,size=18 --disk path=/var/lib/libvirt/ISOs/Win10_1703_Czech_x64.iso,device=cdrom --cdrom=/var/lib/libvirt/ISOs/virtio-win-0.1.126.iso --graphics spice,listen=0.0.0.0 --ram=3072 --vcpus=2
+
 ### Mount and unmount a virt image (read-only) 
 
 mkdir -p /mnt/kvm-win10-mount
