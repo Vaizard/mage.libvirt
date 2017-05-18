@@ -4,11 +4,16 @@ Ansible role to install and manage kvm/libvirt guests.
 ## Tips & tricks
 
 ```sh
-### Create an unmanaged/testing Windows guest:
+### Set up a Windows guest:
 
+# a basic vm setup
 virt-install --name="kvm-win10" --os-type=windows --network network=default --disk path=/home/user/kvm-win10.qcow2,size=15 --cdrom=/home/user/Win10_1703_Czech_x64.iso  --graphics spice --ram=2048
+# sophisticated
 
-virt-install --name="kvm-win10" --os-type=windows --os-variant=win10 --network network=default --disk path=/var/lib/libvirt/images/share.qcow2,size=5,bus=virtio --disk path=/var/lib/libvirt/images/kvm-win10.qcow2,size=18 --disk path=/var/lib/libvirt/ISOs/Win10_1703_Czech_x64.iso,device=cdrom --cdrom=/var/lib/libvirt/ISOs/virtio-win-0.1.126.iso --graphics spice,listen=0.0.0.0 --ram=3072 --vcpus=2
+# high performance vm (use viostor driver)
+virt-install --name="kvm-win10" --os-type=windows --os-variant=win10 --network network=default,,model=virtio --disk path=/var/lib/libvirt/images/kvm-win10.qcow2,size=18,bus=virtio --disk path=/var/lib/libvirt/images/share.qcow2,size=5,bus=virtio --disk path=/var/lib/libvirt/ISOs/Win10_1703_Czech_x64.iso,device=cdrom --cdrom=/var/lib/libvirt/ISOs/virtio-win-0.1.126.iso --graphics spice,listen=0.0.0.0 --ram=3072 --vcpus=2 --noautoconsole
+# High performance virtio drivers are in use. You will need to downloaded the ISO with the drivers (see https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso). While setting up disks and partitions, install the viostor driver to allow the Windows installer to see the virtio disks. After booting into the system for the first time, ensure to install the rest of the virtio drivers - look at the device management launched bz `mmc devmgmt.msc` to see which devices require a propper driver.
+
 
 ### Mount and unmount a virt image (read-only) 
 
