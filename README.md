@@ -44,3 +44,8 @@ virsh net-dhcp-leases default # show ip addresses leased on the 'default' networ
 virsh edit kvm-win10 # edit the virtual machine
 virt-viewer --connect qemu+ssh://<user>@<server>:<ssh_port>/system guest # connect to a remote console over ssh
 ```
+
+## Other articles
+
+- https://major.io/2015/08/03/live-migration-failures-with-kvm-and-libvirt/
+- https://hgj.hu/live-migrating-a-virtual-machine-with-libvirt-without-a-shared-storage/
